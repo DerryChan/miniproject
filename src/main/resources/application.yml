@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: a
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mini_project?useSSL=false&serverTimezone=UTC
+    username: root
+    password: derrychan
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
