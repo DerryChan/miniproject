@@ -1,0 +1,6 @@
+server:
+  port: 8081
+  context-path: /mini_project
+person:
+  name: 小雷
+  age: 21
