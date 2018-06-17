@@ -6,14 +6,14 @@ User
 login()
 
 Room
-**获取转/求租房屋信息，可在内部添加过滤条件，默认按publishtime递减查找**
-**必须指定subject的值为0还是1**
-**过滤条件: deadline, money, location**
+# 获取转/求租房屋信息，可在内部添加过滤条件，默认按publishtime递减查找
+# 必须指定subject的值为0还是1
+# 过滤条件: deadline, money, location
 getRoomList()
-**房源发布字段：roomurl, description, location, money, deadline**
-**求租发布字段：description, location, money, deadline**
+# 房源发布字段：roomurl, description, location, money, deadline
+# 求租发布字段：description, location, money, deadline
 addNewRoom()
-**用于个人信息页面展示**
+# 用于个人信息页面展示
 getRoomListByRtx()
 
 ========================================
