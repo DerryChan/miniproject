@@ -4,7 +4,13 @@ import com.intern.miniproject.dao.RoomRepository;
 import com.intern.miniproject.entity.Room;
 import com.intern.miniproject.result.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
+
+import com.github.wenhao.jpa.Specifications;
+
+import java.util.Objects;
+import java.util.Calendar;
 
 /**
  * Created by Derry on 2018/6/17.
@@ -21,13 +27,24 @@ public class RoomController {
      * @return
      */
     @GetMapping(value = "/allRoom")
-    public ResultJson getRoomList(@RequestParam(value="subject") Integer subject
-//                                  @RequestParam(value="deadline") long deadline,
-//                                  @RequestParam(value="money") Integer money,
-//                                  @RequestParam(value="location") Integer location
-    ) {
-
-        return new ResultJson(true, "Successful", roomRepository.getBySubject(subject));
+    public ResultJson getRoomList(@RequestParam(value="subject") Integer subject,
+                                  @RequestParam(value="deadline_type") Integer deadline_type,
+                                  @RequestParam(value="money") Integer money,
+                                  @RequestParam(value="location") Integer location) {
+        long deadline = 0;
+        if (Objects.nonNull(deadline_type)) {
+            Calendar rightNow = Calendar.getInstance();
+            rightNow.add(Calendar.DAY_OF_YEAR, deadline_type);//日期加1/7/30天
+            deadline = rightNow.getTime().getTime();
+        }
+        Specification<Room> specification = Specifications.<Room>and()
+                .eq("subject", subject)
+                .lt(Objects.nonNull(deadline_type), "deadline", deadline)
+                .lt(Objects.nonNull(money), "money", money)
+                .eq(Objects.nonNull(location), "location", location)
+                .eq("user.street")
+                .build();
+        return new ResultJson(true, "Successful", roomRepository.findAll(specification));
     }
 
     /**
