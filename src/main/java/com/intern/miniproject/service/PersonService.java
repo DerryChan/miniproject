@@ -5,7 +5,7 @@ import com.intern.miniproject.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 
 /**
  * Created by Derry on 2018/6/16.
@@ -20,7 +20,7 @@ public class PersonService {
      * 两条数据同时成功，或者同时不成功
      * 保证数据库数据的完整性和一致性
      */
-    @Transactional
+    //@Transactional
     public void insertTwo() {
         Person personA = new Person();
         personA.setName("秋雅");
