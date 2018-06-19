@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 //import javax.transaction.Transactional;
 
 /**
- * Created by Derry on 2018/6/16.
+ * Created by Derry on 2018/6/17.
  */
 @Service
 public class PersonService {
@@ -27,7 +27,7 @@ public class PersonService {
         personA.setAge(19);
         personRepository.save(personA);
 
-//        System.out.print(1 / 0);
+//        System.out.print(1/0);
 
         Person personB = new Person();
         personB.setName("梦特娇");
@@ -35,4 +35,3 @@ public class PersonService {
         personRepository.save(personB);
     }
 }
-

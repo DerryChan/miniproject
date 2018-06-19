@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    User findByRtx(String rtx);
+    public User findByRtx(String rtx);
 }

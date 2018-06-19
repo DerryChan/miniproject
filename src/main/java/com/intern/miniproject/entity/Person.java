@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Person {
     @Id
     @GeneratedValue
-    private  Integer id;
+    private Integer id;
     private String name;
     private Integer age;
 

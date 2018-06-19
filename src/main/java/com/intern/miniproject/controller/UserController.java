@@ -34,10 +34,4 @@ public class UserController {
             return new ResultJson(false, "Login Failed, Please check your password or rtx", null);
         }
     }
-
-    @PostMapping(value = "/test")
-    public ResultJson test(@RequestParam("rtx") String rtx) {
-        return null;
-    }
-
 }
