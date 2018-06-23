@@ -4,21 +4,34 @@ import com.intern.miniproject.dao.UserRepository;
 import com.intern.miniproject.entity.User;
 import com.intern.miniproject.result.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Derry on 2018/6/17.
  */
 @RestController
+@RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+//    /**
+//     * Login
+//     *
+//     * @param rtx
+//     * @param outlookPwd
+//     * @return
+//     */
+//    @PostMapping(value = "/login")
+//    public ResultJson login(@RequestParam("rtx") String rtx,
+//                            @RequestParam("outlookPwd") String outlookPwd) {
+//        User user = userRepository.findByRtx(rtx);
+//        if (user.getOutlookPwd().equals(outlookPwd)) {
+//            return new ResultJson(true, "Login Successful", null);
+//        } else {
+//            return new ResultJson(false, "Login Failed, Please check your password or rtx", null);
+//        }
+//    }
     /**
      * Login
      *
@@ -27,13 +40,23 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/login")
-    public ResultJson login(@RequestParam("rtx") String rtx,
-                            @RequestParam("outlookPwd") String outlookPwd) {
+    public Boolean login(@RequestParam("rtx") String rtx,
+                         @RequestParam("outlookPwd") String outlookPwd) {
         User user = userRepository.findByRtx(rtx);
-        if (Objects.nonNull(user) && user.getOutlookPwd().equals(outlookPwd)) {
-            return new ResultJson(true, "Login Successful", user.getRtx());
+        if (user.getOutlookPwd().equals(outlookPwd)) {
+            return true;
         } else {
-            return new ResultJson(false, "Login Failed, Please check your password or rtx", null);
+            return false;
         }
+    }
+
+    /**
+     * get user
+     * @param rtx
+     * @return
+     */
+    @GetMapping(value = "/getUserByRtx")
+    public User getUserByRtx(@RequestParam("rtx") String rtx) {
+        return userRepository.findByRtx(rtx);
     }
 }

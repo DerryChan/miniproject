@@ -6,11 +6,14 @@ import com.intern.miniproject.result.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Derry on 2018/6/17.
  */
 @RestController
+@RequestMapping(value = "/room")
 public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
@@ -27,10 +30,25 @@ public class RoomController {
         return new ResultJson(true, "Successful", roomRepository.findAllFilter(subject, location));
     }
 
-    @GetMapping(value = "/allRoom")
-    public ResultJson getFilterRoomList(@RequestParam(value="subject") Integer subject) {
-        return new ResultJson(true, "Successful", roomRepository.findAll(subject));
+    /**
+     * Get All Rooms
+     *
+     * @return
+     */
+    @GetMapping(value = "/getRoomList")
+    public List<Room> getRoomList() {
+        return roomRepository.findAll();
     }
+//    /**
+//     * Get All Rooms
+//     *
+//     * @return
+//     */
+//    @GetMapping(value = "/getRoomList")
+//    public ResultJson getRoomList() {
+//        return new ResultJson(true, "Successful", roomRepository.findAll());
+//    }
+
     /**
      * New Room
      *
@@ -45,8 +63,8 @@ public class RoomController {
      * @return
      */
     @PostMapping(value = "/addNewRoom")
-    public ResultJson addNewRoom(@RequestParam("roomUrl") String roomUrl,
-                                 @RequestParam("publishTime") long publishTime,
+    public ResultJson addNewRoom(@RequestParam("publishTime") long publishTime,
+                                 @RequestParam("roomUrl") String roomUrl,
                                  @RequestParam("location") String location,
                                  @RequestParam("rentWay") Integer rentWay,
                                  @RequestParam("subject") Integer subject,
@@ -54,9 +72,14 @@ public class RoomController {
                                  @RequestParam("money") Integer money,
                                  @RequestParam("deadline") Long deadline,
                                  @RequestParam("description") String description) {
-        //room image url handler
         Room room = new Room(roomUrl, publishTime, location, rentWay, subject, rtx, money, deadline, description);
         return new ResultJson(true, "Successful", roomRepository.save(room));
+
+    }
+
+    @GetMapping(value = "/getRoomByRoomId")
+    public Room getRoomByRoomId(@RequestParam("roomId") Integer roomId) {
+        return roomRepository.findByRoomId(roomId);
     }
 
     @GetMapping(value = "/room")
