@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 /**
  * Created by Derry on 2018/6/17.
  */
 @RestController
-@RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -29,11 +30,10 @@ public class UserController {
     public ResultJson login(@RequestParam("rtx") String rtx,
                             @RequestParam("outlookPwd") String outlookPwd) {
         User user = userRepository.findByRtx(rtx);
-        if (user.getOutlookPwd().equals(outlookPwd)) {
-            return new ResultJson(true, "Login Successful", null);
+        if (Objects.nonNull(user) && user.getOutlookPwd().equals(outlookPwd)) {
+            return new ResultJson(true, "Login Successful", user.getRtx());
         } else {
             return new ResultJson(false, "Login Failed, Please check your password or rtx", null);
         }
     }
-
 }

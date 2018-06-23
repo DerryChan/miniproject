@@ -20,5 +20,4 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
      */
     public List<Person> findByAge(Integer age);
 
-
 }

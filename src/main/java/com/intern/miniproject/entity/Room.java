@@ -12,6 +12,7 @@ public class Room {
     @Id
     @GeneratedValue
     private Integer roomId;
+    private String roomUrl;
     private long publishTime;
     private String location;
     private Integer rentWay;
@@ -24,7 +25,8 @@ public class Room {
     public Room() {
     }
 
-    public Room(long publishTime, String location, Integer rentWay, Integer subject, String rtx, Integer money, long deadline, String description) {
+    public Room(String roomUrl, long publishTime, String location, Integer rentWay, Integer subject, String rtx, Integer money, long deadline, String description) {
+        this.roomUrl = roomUrl;
         this.publishTime = publishTime;
         this.location = location;
         this.rentWay = rentWay;
@@ -41,6 +43,14 @@ public class Room {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
+    }
+
+    public String getRoomUrl() {
+        return roomUrl;
+    }
+
+    public void setRoomUrl(String roomUrl) {
+        this.roomUrl = roomUrl;
     }
 
     public long getPublishTime() {

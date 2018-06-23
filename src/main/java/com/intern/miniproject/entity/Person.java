@@ -3,7 +3,6 @@ package com.intern.miniproject.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 /**
  * Created by Derry on 2018/6/15.
  */
@@ -18,7 +17,6 @@ public class Person {
     //必须要有构造函数
     public Person() {
     }
-
 
     public Integer getId() {
         return id;
