@@ -37,7 +37,4 @@ public class ResultJson {
         return result;
     }
 
-    public void setResult(Object result) {
-        this.result = result;
-    }
 }

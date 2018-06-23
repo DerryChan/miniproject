@@ -2,7 +2,6 @@ package com.intern.miniproject.controller;
 
 import com.intern.miniproject.dao.UserRepository;
 import com.intern.miniproject.dao.MessageRepository;
-import com.intern.miniproject.entity.Message;
 import com.intern.miniproject.entity.User;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 
 /**
  * Created by Derry on 2018/6/17.
  */
 @RestController
 public class UserController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserRepository userRepository;
     private MessageRepository messageRepository;
@@ -42,11 +48,10 @@ public class UserController {
     public Boolean login(@RequestParam("rtx") String rtx,
                          @RequestParam("outlookPwd") String outlookPwd) {
         User user = userRepository.findByRtx(rtx);
-        if (user.getOutlookPwd().equals(outlookPwd)) {
-            return true;
-        } else {
+        if (user == null) {
             return false;
         }
+        return user.getOutlookPwd().equals(outlookPwd);
     }
 
     @PostMapping(value = "/login_test")
