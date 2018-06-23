@@ -1,6 +1,6 @@
 server:
-  port: 8081
-  context-path: /Qshelter
+  port: 8080
+  context-path: /miniproject
 person:
   name: 小雷
   age: 21
