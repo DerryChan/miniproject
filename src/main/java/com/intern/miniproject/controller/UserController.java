@@ -3,8 +3,11 @@ package com.intern.miniproject.controller;
 import com.intern.miniproject.dao.UserRepository;
 import com.intern.miniproject.entity.User;
 import com.intern.miniproject.result.ResultJson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 /**
  * Created by Derry on 2018/6/17.
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserRepository userRepository;
 
@@ -43,11 +48,10 @@ public class UserController {
     public Boolean login(@RequestParam("rtx") String rtx,
                          @RequestParam("outlookPwd") String outlookPwd) {
         User user = userRepository.findByRtx(rtx);
-        if (user.getOutlookPwd().equals(outlookPwd)) {
-            return true;
-        } else {
+        if (user == null) {
             return false;
         }
+        return user.getOutlookPwd().equals(outlookPwd);
     }
 
     /**
