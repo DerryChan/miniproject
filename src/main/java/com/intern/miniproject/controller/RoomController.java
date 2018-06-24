@@ -2,7 +2,7 @@ package com.intern.miniproject.controller;
 
 import com.intern.miniproject.dao.RoomRepository;
 import com.intern.miniproject.entity.Room;
-import com.intern.miniproject.service.SpringContextUtils;
+//import com.intern.miniproject.service.SpringContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
-    @Autowired
-    private HttpServletRequest request;
 
     /**
      * 获取求租/出租流
@@ -50,53 +48,6 @@ public class RoomController {
         return roomRepository.findBySubjectOrderByPublishTimeDesc(subject);
     }
 
-    @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
-    public String goUploadImg() {
-        //跳转到 templates 目录下的 uploadimg.html
-        return "uploadimg";
-    }
-
-    @GetMapping(value = "/uploadFile")
-    public String uploadImg(@RequestParam(value="file")MultipartFile file) {
-        if (file.isEmpty()) {
-            return null;
-        }else {
-
-            //保存时的文件名
-            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-            Calendar calendar = Calendar.getInstance();
-            String dateName = df.format(calendar.getTime())+file.getOriginalFilename();
-
-            System.out.println(dateName);
-            //保存文件的绝对路径
-            WebApplicationContext webApplicationContext = (WebApplicationContext)SpringContextUtils.applicationContext;
-            ServletContext servletContext = webApplicationContext.getServletContext();
-            String realPath = servletContext.getRealPath("/");
-            String filePath = realPath + "WEB-INF"+File.separator + "classes" + File.separator +"static" + File.separator + "resource" + File.separator+dateName;
-            System.out.println("绝对路径:"+filePath);
-
-            File newFile = new File(filePath);
-
-            //MultipartFile的方法直接写文件
-            try {
-                //上传文件
-                file.transferTo(newFile);
-
-                //数据库存储的相对路径
-                String projectPath = servletContext.getContextPath();
-                String contextpath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+projectPath;
-                String url = contextpath + "/resources/"+dateName;
-                System.out.println("相对路径:"+url);
-                //文件名与文件URL存入数据库表
-                return url;
-            } catch (IllegalStateException | IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return null;
-    }
-
     /**
      * New Room
      *
@@ -112,7 +63,7 @@ public class RoomController {
      */
     @PostMapping(value = "/addNewRoom")
     public Room addNewRoom(@RequestParam("publishTime") long publishTime,
-                                 @RequestParam("roomUrl") MultipartFile roomUrl,
+                                 @RequestParam("roomUrl") String roomUrl,
                                  @RequestParam("location") String location,
                                  @RequestParam("rentWay") Integer rentWay,
                                  @RequestParam("subject") Integer subject,
@@ -120,8 +71,8 @@ public class RoomController {
                                  @RequestParam("money") Integer money,
                                  @RequestParam("deadline") Long deadline,
                                  @RequestParam("description") String description) {
-        String url = uploadImg(roomUrl);
-        Room room = new Room(url, publishTime, location, rentWay, subject, rtx, money, deadline, description);
+        //String url = uploadImg(roomUrl);
+        Room room = new Room(roomUrl, publishTime, location, rentWay, subject, rtx, money, deadline, description);
         return roomRepository.save(room);
     }
 
