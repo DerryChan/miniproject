@@ -62,7 +62,7 @@ public class RoomController {
      * @return
      */
     @PostMapping(value = "/addNewRoom")
-    public Room addNewRoom(@RequestParam("publishTime") long publishTime,
+    public Boolean addNewRoom(@RequestParam("publishTime") long publishTime,
                                  @RequestParam("roomUrl") String roomUrl,
                                  @RequestParam("location") String location,
                                  @RequestParam("rentWay") Integer rentWay,
@@ -73,7 +73,13 @@ public class RoomController {
                                  @RequestParam("description") String description) {
         //String url = uploadImg(roomUrl);
         Room room = new Room(roomUrl, publishTime, location, rentWay, subject, rtx, money, deadline, description);
-        return roomRepository.save(room);
+
+        if ( roomRepository.save(room) == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     @GetMapping(value = "/getRoomByRoomId")

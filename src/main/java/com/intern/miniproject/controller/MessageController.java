@@ -28,11 +28,16 @@ public class MessageController {
     }
 
     @GetMapping(value = "/addMessage")
-    public Message addMessageList(@RequestParam("fromRtx") String fromRtx,
+    public Boolean addMessageList(@RequestParam("fromRtx") String fromRtx,
                                   @RequestParam("toRtx") String toRtx,
                                   @RequestParam("message") String message) {
         Date now = new Date();
         Message msg = new Message(fromRtx, toRtx, message, now.getTime());
-        return messageRepository.save(msg);
+        if ( messageRepository.save(msg) == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
