@@ -1,8 +1,6 @@
 //package com.intern.miniproject.controller;
-//
-//import com.hand.hand.util.FileUtil;  //文件工具类
+//import com.intern.miniproject.service.FileUtil;
 //import com.intern.miniproject.service.SpringContextUtils;
-//import org.aspectj.util.FileUtil;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +49,11 @@
 //            String filePath = realPath + "WEB-INF"+File.separator + "classes" + File.separator +"static" + File.separator + "resource" + File.separator+dateName;
 //            System.out.println("绝对路径:"+filePath);
 //            //File newFile = new File(filePath);
-//            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+//            try {
+//                FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+//            } catch (Exception e) {
+//                // TODO: handle exception
+//            }
 //
 //            //MultipartFile的方法直接写文件
 ////            try {
