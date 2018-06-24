@@ -11,16 +11,10 @@ import java.util.List;
  */
 public interface RoomRepository extends JpaRepository<Room, Integer> {
     public Room findByRoomId(Integer roomId);
+    public List<Room> findBySubjectOrderByPublishTimeDesc(Integer subject);
+    public List<Room> findBySubjectAndRtxOrderByPublishTimeDesc(Integer subject, String rtx);
 
-    @Query(value = "select Room.*, User.icon from Room left join User on Room.rtx=User.rtx"
-            +" where Room.subject=?1 order by Room.publish_time desc", nativeQuery = true)
-    public List<Object> findAll(Integer subject);
+    @Query(value = "select Room.* from Room where subject=?1 and location like %?2% order by publish_time desc", nativeQuery = true)
+    public List<Room> findAllFilter(Integer subject, String location);
 
-    @Query(value = "select Room.*, User.icon from Room left join User on Room.rtx=User.rtx"
-            +" where Room.subject=?1 and Room.location like %?2% order by Room.publish_time desc", nativeQuery = true)
-    public List<Object> findAllFilter(Integer subject, String location);
-
-    @Query(value = "select Room.*, User.icon from Room left join User on Room.rtx=User.rtx"
-            +" where Room.rtx=?1 and Room.subject=?2 order by Room.publish_time desc", nativeQuery = true)
-    public List<Object> findByRtxAndSubject(String rtx, Integer subject);
 }
